@@ -1,0 +1,15 @@
+System Requirements
+++++++++++++++++++++
+
+PHP & APACHE
+=================
+
+PHP Version 7.2.34
+Ensure that you have your PHP and Apache server installed.
+
+You might want to visit this site ``https://httpd.apache.org/docs/2.4/install.html``
+
+PYTHON
+==================
+
+Ensure that you have ``Python 2.7.18`` installed in your device. 
