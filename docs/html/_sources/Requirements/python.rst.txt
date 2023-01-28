@@ -1,0 +1,5 @@
+
+PYTHON
+==================
+
+Ensure that you have ``Python 2.7.18`` installed in your device. 

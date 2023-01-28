@@ -1,0 +1,24 @@
+
+This code is defining a method called sales_agent_dashboard_table within the HomeController class in a Laravel application. The method takes a Request object as an argument, which allows it to access data sent in the request such as query parameters.
+
+The method starts by defining several variables such as brand, commodity, channel, start_date, end_date, vendor, language, state, market, column, direction. These variables are being set with the values from the request object using the get method.
+
+Then, the method uses the StatsProduct model to retrieve data from the database. It uses the select method to specify which columns from the table should be retrieved. It also uses the DB::raw
+
+The method then uses the eventRange method on the query to filter the data by a range of dates. Then, it uses the where method to filter the data by the brand_id and sales_agent_id column.
+
+Then, it uses the whereIn method to filter the data by the channel_id, market_id, language_id, commodity_id and vendor_id columns if the corresponding values are present in the request. It also uses the leftJoin method to join the states table and filter by the state value if present in the request.
+
+After that, the method uses the groupBy method to group the data by the sales_agent_id and day columns.
+
+The method then retrieves the data by using the get method and converts it to an array.
+
+Then, it loops through the data, creating several arrays like agents_id, agents_name, vendors, offices, selling_days, sales_per_day, sales, no_sales, efficiency.
+
+The method doesn't return any value, but it generates an array with the desired data to be used in other parts of the application.
+
+.. literalinclude:: ../../controllers/HomeController.php
+    :language: php
+    :caption: **HomeController@sales_agent_dashboard_table**
+    :lines: 2546-2690
+    :linenos:

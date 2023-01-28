@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; TPV CLIENT  documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> TPV CLIENT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">SETUP:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Requirements/system-requirements.html">System Requirements</a></li>
+</ul>
+<p class="caption"><span class="caption-text">MODULES:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../dashboard.html">Main Dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users.html">Users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../config.html">Configuration</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">TPV CLIENT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/Modules/contents/dashboard/sales_agent_dashboard_table.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>This code is defining a method called sales_agent_dashboard_table within the HomeController class in a Laravel application. The method takes a Request object as an argument, which allows it to access data sent in the request such as query parameters.</p>
+<p>The method starts by defining several variables such as brand, commodity, channel, start_date, end_date, vendor, language, state, market, column, direction. These variables are being set with the values from the request object using the get method.</p>
+<p>Then, the method uses the StatsProduct model to retrieve data from the database. It uses the select method to specify which columns from the table should be retrieved. It also uses the DB::raw</p>
+<p>The method then uses the eventRange method on the query to filter the data by a range of dates. Then, it uses the where method to filter the data by the brand_id and sales_agent_id column.</p>
+<p>Then, it uses the whereIn method to filter the data by the channel_id, market_id, language_id, commodity_id and vendor_id columns if the corresponding values are present in the request. It also uses the leftJoin method to join the states table and filter by the state value if present in the request.</p>
+<p>After that, the method uses the groupBy method to group the data by the sales_agent_id and day columns.</p>
+<p>The method then retrieves the data by using the get method and converts it to an array.</p>
+<p>Then, it loops through the data, creating several arrays like agents_id, agents_name, vendors, offices, selling_days, sales_per_day, sales, no_sales, efficiency.</p>
+<p>The method doesn’t return any value, but it generates an array with the desired data to be used in other parts of the application.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text"><strong>HomeController&#64;sales_agent_dashboard_table</strong></span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-php notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="x">    public function sales_agent_dashboard_table(Request $request)</span>
+<span class="x">    {</span>
+<span class="x">        $brand = GetCurrentBrandId();</span>
+<span class="x">        $commodity = $request-&gt;get(&#39;commodity&#39;);</span>
+<span class="x">        $channel = $request-&gt;get(&#39;channel&#39;);</span>
+<span class="x">        $start_date = $request-&gt;get(&#39;startDate&#39;) ?? Carbon::yesterday()-&gt;format(&#39;Y-m-d&#39;);</span>
+<span class="x">        $end_date = $request-&gt;get(&#39;endDate&#39;) ?? Carbon::today()-&gt;format(&#39;Y-m-d&#39;);</span>
+<span class="x">        $vendor = $request-&gt;get(&#39;vendor&#39;);</span>
+<span class="x">        $language = $request-&gt;get(&#39;language&#39;);</span>
+<span class="x">        $state = $request-&gt;get(&#39;state&#39;);</span>
+<span class="x">        $market = $request-&gt;get(&#39;market&#39;);</span>
+<span class="x">        $column = $request-&gt;get(&#39;column&#39;);</span>
+<span class="x">        $direction = $request-&gt;get(&#39;direction&#39;);</span>
+
+<span class="x">        $stats_product = StatsProduct::select(</span>
+<span class="x">            DB::raw(&quot;DATE_FORMAT(stats_product.event_created_at, &#39;%Y-%m-%d&#39;) as day&quot;),</span>
+<span class="x">            &#39;stats_product.sales_agent_id&#39;,</span>
+<span class="x">            DB::raw(&#39;SUM(CASE WHEN result = &quot;Sale&quot; THEN 1 ELSE 0 END) AS sales&#39;),</span>
+<span class="x">            DB::raw(&#39;SUM(CASE WHEN result = &quot;No Sale&quot; AND disposition_reason NOT IN (&quot;Pending&quot;, &quot;Abandoned&quot;) THEN 1 ELSE 0 END) AS no_sales&#39;),</span>
+<span class="x">            &#39;stats_product.sales_agent_name&#39;,</span>
+<span class="x">            &#39;stats_product.vendor_name&#39;,</span>
+<span class="x">            &#39;stats_product.office_name&#39;</span>
+<span class="x">        )-&gt;eventRange(</span>
+<span class="x">            $start_date,</span>
+<span class="x">            $end_date</span>
+<span class="x">        )-&gt;where(</span>
+<span class="x">            &#39;stats_product.brand_id&#39;,</span>
+<span class="x">            $brand</span>
+<span class="x">        )-&gt;whereNotNull(&#39;stats_product.sales_agent_id&#39;);</span>
+
+<span class="x">        if ($channel) {</span>
+<span class="x">            $stats_product = $stats_product-&gt;whereIn(&#39;channel_id&#39;, $channel);</span>
+<span class="x">        }</span>
+
+<span class="x">        if ($market) {</span>
+<span class="x">            $stats_product = $stats_product-&gt;whereIn(&#39;market_id&#39;, $market);</span>
+<span class="x">        }</span>
+
+<span class="x">        if ($language) {</span>
+<span class="x">            $stats_product = $stats_product-&gt;whereIn(&#39;language_id&#39;, $language);</span>
+<span class="x">        }</span>
+
+<span class="x">        if ($commodity) {</span>
+<span class="x">            $stats_product = $stats_product-&gt;whereIn(&#39;commodity_id&#39;, $commodity);</span>
+<span class="x">        }</span>
+
+<span class="x">        if ($state) {</span>
+<span class="x">            $stats_product = $stats_product-&gt;leftJoin(</span>
+<span class="x">                &#39;states&#39;,</span>
+<span class="x">                &#39;stats_product.service_state&#39;,</span>
+<span class="x">                &#39;states.state_abbrev&#39;</span>
+<span class="x">            )-&gt;whereIn(</span>
+<span class="x">                &#39;states.id&#39;,</span>
+<span class="x">                $state</span>
+<span class="x">            );</span>
+<span class="x">        }</span>
+
+<span class="x">        if (&#39;client&#39; == session(&#39;portal&#39;)) {</span>
+<span class="x">            if ($vendor) {</span>
+<span class="x">                $stats_product = $stats_product-&gt;whereIn(&#39;vendor_id&#39;, $vendor);</span>
+<span class="x">            }</span>
+<span class="x">        } else {</span>
+<span class="x">            $stats_product = $stats_product-&gt;where(&#39;vendor_id&#39;, GetCurrentBrandId());</span>
+<span class="x">        }</span>
+
+<span class="x">        $stats_product = $stats_product-&gt;groupBy(&#39;stats_product.sales_agent_id&#39;, &#39;day&#39;);</span>
+
+<span class="x">        $stats_product = $stats_product-&gt;get()-&gt;toArray();</span>
+<span class="x">        //dd($stats_product);</span>
+
+<span class="x">        //Preparing the final result</span>
+<span class="x">        $agents_id = array_unique(array_column($stats_product, &#39;sales_agent_id&#39;));</span>
+<span class="x">        $agents_name = [];</span>
+<span class="x">        $vendors = [];</span>
+<span class="x">        $offices = [];</span>
+<span class="x">        $selling_days = [];</span>
+<span class="x">        $sales_per_day = [];</span>
+<span class="x">        $sales = [];</span>
+<span class="x">        $no_sales = [];</span>
+<span class="x">        $efficiency = [];</span>
+<span class="x">        foreach ($agents_id as $agent) {</span>
+<span class="x">            foreach ($stats_product as $product) {</span>
+<span class="x">                if ($product[&#39;sales_agent_id&#39;] == $agent) {</span>
+<span class="x">                    $selling_days[$agent] = isset($selling_days[$agent]) ? $selling_days[$agent] + 1 : 1;</span>
+<span class="x">                    $sales_per_day[$agent] = isset($sales_per_day[$agent]) ? $sales_per_day[$agent] + $product[&#39;sales&#39;] : $product[&#39;sales&#39;];</span>
+<span class="x">                    $no_sales[$agent] = isset($no_sales[$agent]) ? $no_sales[$agent] + $product[&#39;no_sales&#39;] : $product[&#39;no_sales&#39;];</span>
+<span class="x">                    $vendors[$agent] = $product[&#39;vendor_name&#39;];</span>
+<span class="x">                    $offices[$agent] = $product[&#39;office_name&#39;];</span>
+<span class="x">                    $agents_name[$agent] = $product[&#39;sales_agent_name&#39;];</span>
+<span class="x">                }</span>
+<span class="x">            }</span>
+<span class="x">        }</span>
+
+<span class="x">        $avg_sales_per_day = [];</span>
+<span class="x">        foreach ($agents_id as $agent) {</span>
+<span class="x">            //I need to check values before to avoid division by zero error</span>
+<span class="x">            if (0 == $sales_per_day[$agent] or 0 == $selling_days[$agent]) {</span>
+<span class="x">                $avg_sales_per_day[$agent] = 0;</span>
+<span class="x">            } else {</span>
+<span class="x">                $avg_sales_per_day[$agent] = round($sales_per_day[$agent] / $selling_days[$agent], 2);</span>
+<span class="x">            }</span>
+<span class="x">            //Calculating the efficiency</span>
+<span class="x">            if (0 == $sales_per_day[$agent]) {</span>
+<span class="x">                $efficiency[$agent] = 0;</span>
+<span class="x">            } else {</span>
+<span class="x">                $efficiency[$agent] = round(</span>
+<span class="x">                    (100 * $sales_per_day[$agent] / ($sales_per_day[$agent] + $no_sales[$agent])),</span>
+<span class="x">                    2</span>
+<span class="x">                );</span>
+<span class="x">            }</span>
+<span class="x">        }</span>
+
+<span class="x">        $result = [];</span>
+<span class="x">        foreach ($agents_id as $agent) {</span>
+<span class="x">            $result[] = [</span>
+<span class="x">                &#39;agents_id&#39; =&gt; $agent,</span>
+<span class="x">                &#39;agents_name&#39; =&gt; $agents_name[$agent],</span>
+<span class="x">                &#39;selling_days&#39; =&gt; $selling_days[$agent],</span>
+<span class="x">                &#39;sales_per_day&#39; =&gt; $avg_sales_per_day[$agent],</span>
+<span class="x">                &#39;efficiency&#39; =&gt; $efficiency[$agent],</span>
+<span class="x">                &#39;vendor_name&#39; =&gt; $vendors[$agent],</span>
+<span class="x">                &#39;office_name&#39; =&gt; $offices[$agent],</span>
+<span class="x">            ];</span>
+<span class="x">        }</span>
+<span class="x">        //Sorting result y Sales per Day</span>
+<span class="x">        array_multisort(array_column($result, &#39;sales_per_day&#39;), 3, $result);</span>
+
+<span class="x">        if ($column &amp;&amp; $direction) {</span>
+<span class="x">            $sort_type = (&#39;desc&#39; == $direction) ? 3 : 4;</span>
+<span class="x">            array_multisort(array_column($result, $column), $sort_type, $result);</span>
+<span class="x">        }</span>
+
+<span class="x">        if ($request-&gt;get(&#39;csv&#39;)) {</span>
+<span class="x">            //Deleting unnecessary field agents_id from array</span>
+<span class="x">            foreach ($result as &amp;$r) {</span>
+<span class="x">                unset($r[&#39;agents_id&#39;]);</span>
+<span class="x">            }</span>
+
+<span class="x">            return $this-&gt;csv_response(array_values($result), &#39;sales_dashboard_report&#39;);</span>
+<span class="x">        } else {</span>
+<span class="x">            return response()-&gt;json($result);</span>
+<span class="x">        }</span>
+<span class="x">    }</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, ROY DUENAS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
