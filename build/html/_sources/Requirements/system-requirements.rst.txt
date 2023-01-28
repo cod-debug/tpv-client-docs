@@ -6,6 +6,7 @@ PHP & Apache
 =================
 
 PHP Version 7.2.34
+
 Ensure that you have your ``PHP`` and ``Apache server`` installed.
 
 .. tip::
